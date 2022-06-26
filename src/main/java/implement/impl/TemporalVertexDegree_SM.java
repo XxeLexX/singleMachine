@@ -49,8 +49,6 @@ public class TemporalVertexDegree_SM {
                         .forEach(System.out::println);
                 */
 
-                //
-
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

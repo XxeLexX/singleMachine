@@ -15,7 +15,6 @@ public class Main {
         DimensionType dimensionType = DimensionType.VALID_TIME;
 
         /* the wrong results will be caused by Files.walk()
-
         // x can be 1, 10 or 100
         String x = "1";
         String pathString = "/Users/lxx/Desktop/Data_temporal/citibike_" + x + "_temporal/edges.csv";
@@ -27,19 +26,16 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         */
-
 
         // By using merged CSV files can produce the results correctly
         System.out.println("\n>>> merged result <<<\n");
-
         String fullPath = "/Users/lxx/Desktop/Data_temporal/citibike_edges_1.csv";
+
         Path path = Paths.get(fullPath);
 
         TemporalVertexDegree_SM sm2 = new TemporalVertexDegree_SM();
         sm2.run(path, degreeType, dimensionType);
-
 
         long endTime = System.currentTimeMillis();
         timer = endTime - startTime;

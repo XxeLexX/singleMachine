@@ -7,8 +7,7 @@ import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class DegreeCalculatorDefault extends BaseCalculateDegrees
-        implements Function<Pair<String, TreeMap<Long,Integer>>, Stream<Quartet<String, Long, Long, Integer>>> {
+public class DegreeCalculatorDefault extends BaseCalculateDegrees implements Function<Pair<String, TreeMap<Long,Integer>>, Stream<Quartet<String, Long, Long, Integer>>> {
 
     @Override
     public Stream<Quartet<String, Long, Long, Integer>> apply(Pair<String, TreeMap<Long, Integer>> degreeTrees) {

@@ -54,7 +54,6 @@ public class VertexIdEdgeInterval implements Function<TemporalEdge, Stream<Tripl
             default:
                 throw new IllegalArgumentException("Invalid vertex degree type [" + degreeType + "].");
         }
-
         return tempSet.stream();
     }
 }
