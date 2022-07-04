@@ -6,12 +6,11 @@ import implement.myEnum.DimensionType;
 
 import org.javatuples.Triplet;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class VertexIdEdgeInterval implements Function<TemporalEdge, Stream<Triplet<String,Long,Long>>> {
+public class VertexIdEdgeInterval implements Function<TemporalEdge, Stream<Triplet<Integer,Long,Long>>> {
 
     private final DegreeType degreeType;
     private final DimensionType dimensionType;
@@ -26,10 +25,9 @@ public class VertexIdEdgeInterval implements Function<TemporalEdge, Stream<Tripl
     }
 
     @Override
-    public Stream<Triplet<String, Long, Long>> apply(TemporalEdge temporalEdge) {
+    public Stream<Triplet<Integer, Long, Long>> apply(TemporalEdge temporalEdge) {
 
-        // maybe something can be used here to optimize the runtime by not using Arraylist
-        ArrayList<Triplet<String, Long, Long>> tempSet = new ArrayList<>();
+        Stream.Builder<Triplet<Integer, Long, Long>> tripletBuilder = Stream.builder();
 
         Long from = dimensionType.equals(DimensionType.VALID_TIME) ? temporalEdge.getValidTime().getValue0() : temporalEdge.getTransactionTime().getValue0();
         Long to = dimensionType.equals(DimensionType.VALID_TIME) ? temporalEdge.getValidTime().getValue1() : temporalEdge.getTransactionTime().getValue1();
@@ -37,23 +35,23 @@ public class VertexIdEdgeInterval implements Function<TemporalEdge, Stream<Tripl
         switch (degreeType) {
             case IN:
                 // collector.collect(new Tuple3<>(temporalEdge.getTargetId(), from, to));
-                tempSet.add(new Triplet<>(temporalEdge.getTid(), from, to));
+                tripletBuilder.add(new Triplet<>(temporalEdge.getTid(), from, to));
                 break;
             case OUT:
                 // collector.collect(new Tuple3<>(temporalEdge.getSourceId(), from, to));
-                tempSet.add(new Triplet<>(temporalEdge.getSid(), from, to));
+                tripletBuilder.add(new Triplet<>(temporalEdge.getSid(), from, to));
                 break;
             case BOTH:
                 /*
                 // collector.collect(new Tuple3<>(temporalEdge.getTargetId(), from, to));
                 // collector.collect(new Tuple3<>(temporalEdge.getSourceId(), from, to));
                 */
-                tempSet.add(new Triplet<>(temporalEdge.getTid(), from, to));
-                tempSet.add(new Triplet<>(temporalEdge.getSid(), from, to));
+                tripletBuilder.add(new Triplet<>(temporalEdge.getTid(), from, to));
+                tripletBuilder.add(new Triplet<>(temporalEdge.getSid(), from, to));
                 break;
             default:
                 throw new IllegalArgumentException("Invalid vertex degree type [" + degreeType + "].");
         }
-        return tempSet.stream();
+        return tripletBuilder.build();
     }
 }

@@ -6,7 +6,7 @@ public class TemporalEdge extends Edge{
     private Pair<Long, Long> transactionTime;
     private Pair<Long, Long> validTime;
 
-    public TemporalEdge(String e_id, String g_id, String sid, String tid, String e_label, String properties, Pair<Long, Long> transactionTime, Pair<Long, Long> validTime) {
+    public TemporalEdge(int e_id, int g_id, int sid, int tid, String e_label, String properties, Pair<Long, Long> transactionTime, Pair<Long, Long> validTime) {
         super(e_id, g_id, sid, tid, e_label, properties);
         this.transactionTime = transactionTime;
         this.validTime = validTime;

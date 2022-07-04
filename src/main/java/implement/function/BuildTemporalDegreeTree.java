@@ -1,23 +1,20 @@
 package implement.function;
 
 import org.javatuples.Pair;
+import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 
 import java.util.*;
 
 public class BuildTemporalDegreeTree{
-    private final TreeMap<Long, Integer> degreeTreeMap;
+    private static final TreeMap<Long, Integer> degreeTreeMap = new TreeMap<>();
 
-    public BuildTemporalDegreeTree() {
-        this.degreeTreeMap = new TreeMap<>();
-    }
-
-    public Pair<String, TreeMap<Long, Integer>> makeTree(Map.Entry<String, List<Triplet<String, Long, Long>>> entries) {
-        String vertexId = null;
+    public static Pair<Integer, TreeMap<Long, Integer>> makeTree(Map.Entry<Integer, List<Triplet<Integer, Long, Long>>> entries) {
+        int vertexId = 0;
         degreeTreeMap.clear();
 
-        for (Triplet<String, Long, Long> entry : entries.getValue()){
-            if (vertexId == null){
+        for (Triplet<Integer, Long, Long> entry : entries.getValue()){
+            if (vertexId == 0){
                 vertexId = entry.getValue0();
             }
 
@@ -28,8 +25,9 @@ public class BuildTemporalDegreeTree{
         return new Pair<>(vertexId, degreeTreeMap);
     }
 
-    /* put the tree together
-    public Quartet<String, TreeMap<Long, Integer>, Long, Long> reduce(
+    /*  put the tree together
+
+    public Quartet<String, TreeMap<Long, Integer>, Long, Long> mergeTuple(
             Quartet<String, TreeMap<Long, Integer>, Long, Long> left,
             Quartet<String, TreeMap<Long, Integer>, Long, Long> right) throws Exception {
 

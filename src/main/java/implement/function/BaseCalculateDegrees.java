@@ -2,9 +2,9 @@ package implement.function;
 
 import org.javatuples.Quartet;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 public abstract class BaseCalculateDegrees {
 
@@ -13,8 +13,7 @@ public abstract class BaseCalculateDegrees {
             "check the temporal integrity of your graph in the given time domain. The operator " +
             "TemporalGraph#updateEdgeValidity() can be used to update an edges validity to ensure its integrity.";
 
-    protected ArrayList<Quartet<String, Long, Long, Integer>> calculateDegreeAndCollect(String vertexId, TreeMap<Long, Integer> degreeTree,
-                                             Long vertexFromTime, Long vertexToTime) {
+    protected Stream<Quartet<Integer, Long, Long, Integer>> calculateDegreeAndCollect(int vertexId, TreeMap<Long, Integer> degreeTree, Long vertexFromTime, Long vertexToTime) {
 
         // we store for each timestamp the current degree
         int degree = 0;
@@ -22,8 +21,8 @@ public abstract class BaseCalculateDegrees {
         // first degree 0 is from t_from(v) to the first occurrence of a start timestamp
         Long lastTimestamp = vertexFromTime;
 
-        // ...
-        ArrayList<Quartet<String, Long, Long, Integer>> tuple4Arrays = new ArrayList<>();
+        // Use Stream.Builder to store the results
+        Stream.Builder<Quartet<Integer, Long, Long, Integer>> tuple4Builder = Stream.builder();
 
         for (Map.Entry<Long, Integer> entry : degreeTree.entrySet()) {
             // check integrity
@@ -41,7 +40,7 @@ public abstract class BaseCalculateDegrees {
             // The payload is 0, means the degree does not change and the intervals can be merged
             if (entry.getValue() != 0) {
                 //collector.collect(new Tuple4<>(vertexId, lastTimestamp, entry.getKey(), degree));
-                tuple4Arrays.add(new Quartet<>(vertexId, lastTimestamp, entry.getKey(), degree));
+                tuple4Builder.add(new Quartet<>(vertexId, lastTimestamp, entry.getKey(), degree));
                 degree += entry.getValue();
                 // remember the last timestamp since it is the first one of the next interval
                 lastTimestamp = entry.getKey();
@@ -51,13 +50,12 @@ public abstract class BaseCalculateDegrees {
         // last degree is 0 from last occurence of timestamp to t_to(v)
         if (lastTimestamp < vertexToTime) {
             //collector.collect(new Tuple4<>(vertexId, lastTimestamp, vertexToTime, degree));
-            tuple4Arrays.add(new Quartet<>(vertexId, lastTimestamp, vertexToTime, degree));
+            tuple4Builder.add(new Quartet<>(vertexId, lastTimestamp, vertexToTime, degree));
 
         } else if (lastTimestamp > vertexToTime) {
             // This should not happen, seems that a temporal constraint is violated
-            throw new IllegalArgumentException(String.format(TEMPORAL_VIOLATION_MSG, lastTimestamp, vertexToTime,
-                    vertexId));
+            throw new IllegalArgumentException(String.format(TEMPORAL_VIOLATION_MSG, lastTimestamp, vertexToTime, vertexId));
         } // else, the ending bound of the vertex interval equals the last timestamp of the edges
-        return tuple4Arrays;
+        return tuple4Builder.build();
     }
 }
