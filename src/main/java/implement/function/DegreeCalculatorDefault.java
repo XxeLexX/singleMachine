@@ -7,6 +7,12 @@ import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+/**
+ * This Class refers to the version from Flink-Implement,
+ * but to adapt the single machine did also some changes:
+ * return value -> Stream
+ * vertexId -> Integer
+ */
 public class DegreeCalculatorDefault extends BaseCalculateDegrees implements Function<Pair<Integer, TreeMap<Long,Integer>>, Stream<Quartet<Integer, Long, Long, Integer>>> {
 
     @Override

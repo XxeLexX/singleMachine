@@ -6,13 +6,14 @@ import implement.function.StringToEdge;
 import implement.function.VertexIdEdgeInterval;
 import implement.myEnum.DegreeType;
 import implement.myEnum.DimensionType;
-import org.javatuples.Pair;
+
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,11 +46,10 @@ public class TemporalVertexDegree_SM {
                 System.out.println(temporalDegree.count());
 
                 /* cheak the results
-                // temporalDegree.filter(s -> Objects.equals(s.getValue0(), "5f1e9732e3aec88518074932")
-                temporalDegree.filter(s -> Objects.equals(s.getValue0(), "5f1e9732e3aec88518074932")
-                                        && Objects.equals(s.getValue1(), new Long("1515853761961")))
+                temporalDegree.filter(s -> Objects.equals(s.getValue0(), "5f1e9732e3aec8851806f875".hashCode() )
+                                        && Objects.equals(s.getValue1(), new Long("1485703998000")))
                               .forEach(System.out::println);
-                 */
+                */
 
             } catch (Exception e) {
                 throw new RuntimeException(e);

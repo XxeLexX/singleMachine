@@ -6,6 +6,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
+/**
+ * This Class refers to the version from Flink-Implement,
+ * but to adapt the single machine did also some changes:
+ * return value -> Stream
+ * vertexId -> Integer
+ */
 public abstract class BaseCalculateDegrees {
 
     private static final String TEMPORAL_VIOLATION_MSG = "Last timestamp [%d] is not smaller than the " +

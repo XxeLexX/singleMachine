@@ -15,7 +15,7 @@ public class Main {
         DimensionType dimensionType = DimensionType.VALID_TIME;
 
         // By using merged CSV files can produce the results correctly
-        String fullPath = "/Users/lxx/Desktop/Data_temporal/citibike_edges_10.csv";
+        String fullPath = "/Users/lxx/Desktop/Data_temporal/citibike_edges_1.csv";
         System.out.println("\n>>> merged result <<<\n" + "Data> " + fullPath);
 
         Path path = Paths.get(fullPath);

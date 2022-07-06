@@ -24,9 +24,19 @@ public class VertexIdEdgeInterval implements Function<TemporalEdge, Stream<Tripl
         this.dimensionType = Objects.requireNonNull(dimensionType);
     }
 
+    /**
+     * Get the Triplet of VertexId and the From-To instead of the Tuple3
+     * There is three types of Degree:
+     * If IN, the targetId from Edge will be needed,
+     * if OUT, the sourceId from Edge will be needed,
+     * if BOTH, both Id from Edge will be needed.
+     * @param temporalEdge the temporalEdge from the last step @StringToEdge
+     * @return Stream of Triplet with VertexId and a From-To time interval
+     */
     @Override
     public Stream<Triplet<Integer, Long, Long>> apply(TemporalEdge temporalEdge) {
 
+        // The Stream.Builder will be used hier to store each result
         Stream.Builder<Triplet<Integer, Long, Long>> tripletBuilder = Stream.builder();
 
         Long from = dimensionType.equals(DimensionType.VALID_TIME) ? temporalEdge.getValidTime().getValue0() : temporalEdge.getTransactionTime().getValue0();

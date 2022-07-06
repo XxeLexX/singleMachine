@@ -1,5 +1,8 @@
 package implement.myEnum;
 
+/*
+Two types of Time-Dimension, each has the Field from and to
+ */
 public enum DimensionType {
     VALID_TIME,
     TRANSACTION_TIME;

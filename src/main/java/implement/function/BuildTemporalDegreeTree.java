@@ -7,8 +7,16 @@ import org.javatuples.Triplet;
 import java.util.*;
 
 public class BuildTemporalDegreeTree{
+    /**
+     * each TreeMap belongs to one VertexID that stores all the Degrees of one Timestamp
+     */
     private static final TreeMap<Long, Integer> degreeTreeMap = new TreeMap<>();
 
+    /**
+     * Build the TreeMap for each Vertex
+     * @param entries The group by results from the last step, VertexId and all the time interval of it
+     * @return Pair<Integer, TreeMap<Long, Integer>> will be given back as the Results, which contains the VertexId and its TreeMap
+     */
     public static Pair<Integer, TreeMap<Long, Integer>> makeTree(Map.Entry<Integer, List<Triplet<Integer, Long, Long>>> entries) {
         int vertexId = 0;
         degreeTreeMap.clear();

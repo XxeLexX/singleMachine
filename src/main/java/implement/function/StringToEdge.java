@@ -7,7 +7,15 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Extract properties from String and create TemporalEdge
+ */
 public class StringToEdge {
+    /**
+     * Get all the TemporalEdge from the CSV-File
+     * @param s String from CSV-File
+     * @return TemporalEdge from each String
+     */
     public static TemporalEdge convertToTemporalEdge(String s){
         String[] temp = s.split(";");
         String[] timeString = temp[temp.length-1].split("\\),\\(");
@@ -31,6 +39,7 @@ public class StringToEdge {
             tx_timeArray.add(tx_machter.group());
         }
 
+        // the time interval for valid and transaction time
         Pair<Long, Long> valid = new Pair<>(Long.valueOf(v_timeArray.get(0)),Long.valueOf(v_timeArray.get(1)));
         Pair<Long, Long> transaction = new Pair<>(Long.valueOf(tx_timeArray.get(0)),Long.valueOf(tx_timeArray.get(1)));
 
