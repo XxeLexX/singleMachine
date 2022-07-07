@@ -10,17 +10,15 @@ import implement.myEnum.DimensionType;
 import org.javatuples.Quartet;
 import org.javatuples.Triplet;
 
-import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TemporalVertexDegree_SM {
 
-    public Long run(Path filePath_read, Path filePath_write, DegreeType degreeType, DimensionType dimensionType){
+    public Long run(Path filePath_read, String filePath_write, DegreeType degreeType, DimensionType dimensionType){
         // set a timer to calculate the application's runtime
         long startTime = System.currentTimeMillis();
 
@@ -43,9 +41,10 @@ public class TemporalVertexDegree_SM {
                         // 4) For each vertex, calculate the degree evolution and ouput a tuple4
                         .flatMap(new DegreeCalculatorDefault());
 
-                // Stream needs also ouput
-
-                System.out.println(temporalDegree.count());
+                // Output the Stream
+                ResultOutput resultOutput = new ResultOutput();
+                resultOutput.writeTemporalVertexDegree(temporalDegree, filePath_write);
+                //temporalDegree.count();
 
                 /* cheak the results
                 temporalDegree.filter(s -> Objects.equals(s.getValue0(), "5f1e9732e3aec8851806f875".hashCode() )
