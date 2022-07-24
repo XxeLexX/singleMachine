@@ -26,18 +26,11 @@ public class Benchmark_SingleMachine extends AbstractBenchmark{
      * Option to declare the time dimension.
      */
     private static final String OPTION_TIME_DIMENSION = "t";
-    /**
-     * The degree type (IN, OUT or BOTH).
-     */
-    private static String DEGREE_TYPE;
-    /**
-     * The time dimension to consider (VALID_TIME or TRANSACTION_TIME)
-     */
-    private static String TIME_DIMENSION;
+
     /**
      * Option to enable considering the vertex time information (requires an additional join in the pipeline)
      */
-    private static final String OPTION_VERTEX_TIME = "v";
+    //private static final String OPTION_VERTEX_TIME = "v";
     /**
      * Option to declare path to indexed input graph
      */
@@ -57,7 +50,15 @@ public class Benchmark_SingleMachine extends AbstractBenchmark{
     /**
      * Option to count the result sets instead of writing them
      */
-    private static final String OPTION_COUNT_RESULT = "n";
+    //private static final String OPTION_COUNT_RESULT = "n";
+    /**
+     * The degree type (IN, OUT or BOTH).
+     */
+    private static String DEGREE_TYPE;
+    /**
+     * The time dimension to consider (VALID_TIME or TRANSACTION_TIME)
+     */
+    private static String TIME_DIMENSION;
 
     /**
      * Used input path
@@ -78,11 +79,11 @@ public class Benchmark_SingleMachine extends AbstractBenchmark{
     /**
      * Used count only flag. The graph elements will be counted only if this is set to true.
      */
-    static boolean COUNT_RESULT;
+    //static boolean COUNT_RESULT;
     /**
      * A flag to decide whether to include the vertex time information or not.
      */
-    private static boolean INCLUDE_VERTEX_TIME;
+    //private static boolean INCLUDE_VERTEX_TIME;
 
     static {
         OPTIONS.addRequiredOption(OPTION_INPUT_PATH, "input", true, "Path to source files.");
@@ -90,12 +91,11 @@ public class Benchmark_SingleMachine extends AbstractBenchmark{
         OPTIONS.addRequiredOption(OPTION_OUTPUT_PATH, "output", true, "Path to output file.");
         OPTIONS.addRequiredOption(OPTION_CSV_PATH, "csv", true,
                 "Path to csv result file (will be created if not available).");
-        OPTIONS.addOption(OPTION_COUNT_RESULT, "count", false, "Only count the results instead of writing them.");
+        //OPTIONS.addOption(OPTION_COUNT_RESULT, "count", false, "Only count the results instead of writing them.");
         OPTIONS.addRequiredOption(OPTION_DEGREE_TYPE, "degreeType", true, "The degree type (IN, OUT or BOTH).");
         OPTIONS.addRequiredOption(OPTION_TIME_DIMENSION, "dimension", true,
                 "The time dimension (VALID_TIME or TRANSACTION_TIME)");
-        OPTIONS.addOption(OPTION_VERTEX_TIME, "includeVertexTime", false,
-                "Does the vertex time needs to be included?");
+        //OPTIONS.addOption(OPTION_VERTEX_TIME, "includeVertexTime", false, "Does the vertex time needs to be included?");
     }
     /**
      * Reads main arguments (input path, output path, csv path and count flag) from command line.
@@ -107,7 +107,7 @@ public class Benchmark_SingleMachine extends AbstractBenchmark{
         INPUT_FORMAT = cmd.getOptionValue(OPTION_INPUT_FORMAT, DEFAULT_FORMAT);
         OUTPUT_PATH  = cmd.getOptionValue(OPTION_OUTPUT_PATH);
         CSV_PATH     = cmd.getOptionValue(OPTION_CSV_PATH);
-        COUNT_RESULT = cmd.hasOption(OPTION_COUNT_RESULT);
+        //COUNT_RESULT = cmd.hasOption(OPTION_COUNT_RESULT);
     }
 
     public static void main(String[] args) throws Exception {
@@ -118,6 +118,13 @@ public class Benchmark_SingleMachine extends AbstractBenchmark{
             System.out.println(">>> CMD ERROR <<<");
             return;
         }
+
+        /*
+        if(INCLUDE_VERTEX_TIME){
+            System.out.println("NOT SUPPORTED YET");
+            return;
+        }
+        */
 
         // read cmd arguments
         readBaseCMDArguments(cmd);
@@ -161,10 +168,9 @@ public class Benchmark_SingleMachine extends AbstractBenchmark{
      * @throws IOException exception during file writing
      */
     private static void writeCSV(Long runtime_SM) throws IOException {
-        String head = String.format("%s|%s|%s|%s|%s", "dataset", "degreeType", "timeDimension",
-                "vertexTimeIncluded", "Runtime(s)");
-        String tail = String.format("%s|%s|%s|%b|%s", INPUT_PATH, DEGREE_TYPE,
-                TIME_DIMENSION, INCLUDE_VERTEX_TIME, runtime_SM);
+        String head = String.format("%s|%s|%s|%s", "dataset", "degreeType", "timeDimension", "Runtime(s)");
+        String tail = String.format("%s|%s|%s|%s", INPUT_PATH, DEGREE_TYPE,
+                TIME_DIMENSION, Math.round(runtime_SM/1000.0));
         writeToCSVFile(head, tail);
     }
 }
