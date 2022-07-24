@@ -1,14 +1,13 @@
-import implement.impl.ResultOutput;
 import implement.impl.TemporalVertexDegree_SM;
 import implement.myEnum.DegreeType;
 import implement.myEnum.DimensionType;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        DegreeType degreeType = DegreeType.BOTH;
+        DegreeType degreeType = DegreeType.IN;
         DimensionType dimensionType = DimensionType.VALID_TIME;
 
         // By using merged CSV files can produce the results correctly
@@ -18,14 +17,17 @@ public class Main {
 
         System.out.println("\n>>> merged result <<<\n" + "READING DATA FROM...> " + path_read);
 
-        Path path_r = Paths.get(path_read);
+        //Path path_r = Paths.get(path_read);
         //Path path_w = Paths.get(path_write);
 
         TemporalVertexDegree_SM sm = new TemporalVertexDegree_SM();
-        ResultOutput resultOutput = new ResultOutput();
 
-        Long runtime = sm.run(path_r, path_write, degreeType, dimensionType);
-        resultOutput.writeRuntime(runtime, path_runTime);
+        Long runtime = sm.run(path_read, path_write, degreeType, dimensionType);
 
+        try (FileWriter runtimeWriter = new FileWriter(path_runTime, true)){
+            runtimeWriter.write(Long.toString(runtime) + '\n');
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -2,3 +2,5 @@ target/
 src/main/resources/
 src/main/java/labor/
 .idea
+out
+src/main/java/META-INF

@@ -14,7 +14,7 @@ public class BuildTemporalDegreeTree{
 
     /**
      * Build the TreeMap for each Vertex
-     * @param entries The group by results from the last step, VertexId and all the time interval of it
+     * @param entries The group by results from the last step, Which contains VertexId and all the time interval of it
      * @return Pair<Integer, TreeMap<Long, Integer>> will be given back as the Results, which contains the VertexId and its TreeMap
      */
     public static Pair<Integer, TreeMap<Long, Integer>> makeTree(Map.Entry<Integer, List<Triplet<Integer, Long, Long>>> entries) {

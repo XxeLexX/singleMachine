@@ -20,8 +20,8 @@ public class StringToEdge {
         String[] temp = s.split(";");
         String[] timeString = temp[temp.length-1].split("\\),\\(");
 
-        String valid_time_string = timeString[0];
-        String transaction_time_string = timeString[1];
+        String valid_time_string = timeString[1];
+        String transaction_time_string = timeString[0];
 
         // get the time via pattern and matcher
         Pattern pattern = Pattern.compile("-?\\d+");
@@ -43,6 +43,7 @@ public class StringToEdge {
         Pair<Long, Long> valid = new Pair<>(Long.valueOf(v_timeArray.get(0)),Long.valueOf(v_timeArray.get(1)));
         Pair<Long, Long> transaction = new Pair<>(Long.valueOf(tx_timeArray.get(0)),Long.valueOf(tx_timeArray.get(1)));
 
-        return new TemporalEdge(temp[0].hashCode(), temp[1].hashCode(), temp[2].hashCode(), temp[3].hashCode(), temp[4], temp[5], valid,transaction);
+        return new TemporalEdge(temp[0].hashCode(), temp[1].hashCode(), temp[2].hashCode(), temp[3].hashCode(),
+                temp[4], temp[5], transaction, valid);
     }
 }
