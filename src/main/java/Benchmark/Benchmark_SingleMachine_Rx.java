@@ -1,6 +1,7 @@
 package Benchmark;
 
-import implement.impl.TemporalVertexDegree_SM;
+
+import implement.impl.Rx_SM;
 import implement.myEnum.DegreeType;
 import implement.myEnum.DimensionType;
 import org.apache.commons.cli.CommandLine;
@@ -15,7 +16,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Benchmark_SingleMachine extends AbstractBenchmark{
+public class Benchmark_SingleMachine_Rx extends AbstractBenchmark{
 
     /**
      * Option to declare the degree type (in, out or both).
@@ -93,7 +94,7 @@ public class Benchmark_SingleMachine extends AbstractBenchmark{
 
     public static void main(String[] args) throws Exception {
 
-        CommandLine cmd = parseArguments(args, Benchmark_SingleMachine.class.getName());
+        CommandLine cmd = parseArguments(args, Benchmark_SingleMachine_Rx.class.getName());
 
         if (cmd == null) {
             System.out.println(">>> CMD ERROR <<<");
@@ -109,10 +110,11 @@ public class Benchmark_SingleMachine extends AbstractBenchmark{
         DegreeType degreeType = DegreeType.valueOf(DEGREE_TYPE);
         DimensionType timeDimension = DimensionType.valueOf(TIME_DIMENSION);
 
-        TemporalVertexDegree_SM TVD_SM = new TemporalVertexDegree_SM();
-        Long runtime = TVD_SM.run(INPUT_PATH,OUTPUT_PATH,degreeType,timeDimension);
+        Rx_SM rx_sm = new Rx_SM();
+        Long runtime = rx_sm.run(INPUT_PATH,OUTPUT_PATH,degreeType,timeDimension);
         writeCSV(runtime);
     }
+
 
     /**
      * Writes the specified line (csvTail) to the csv file given by option {@value OPTION_CSV_PATH}.
@@ -123,7 +125,6 @@ public class Benchmark_SingleMachine extends AbstractBenchmark{
      * @param csvTail the line to append
      * @throws IOException in case of a IO failure
      */
-
     static void writeToCSVFile(String csvHead, String csvTail) throws IOException {
         Path path = Paths.get(CSV_PATH);
         List<String> linesToWrite;
