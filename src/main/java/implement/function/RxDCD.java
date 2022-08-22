@@ -15,7 +15,6 @@ import java.util.function.Function;
  * vertexId -> Integer
  */
 public class RxDCD extends RxBCD implements Function<Pair<Integer, TreeMap<Long, Integer>>, Observable<Quartet<Integer, Long, Long, Integer>>>, io.reactivex.rxjava3.functions.Function<Pair<Integer, TreeMap<Long, Integer>>, ObservableSource<Quartet<Integer, Long, Long, Integer>>> {
-
     @Override
     public Observable<Quartet<Integer, Long, Long, Integer>> apply(Pair<Integer, TreeMap<Long, Integer>> degreeTrees) {
         return calculateDegreeAndCollect(degreeTrees.getValue0(),degreeTrees.getValue1(),Long.MIN_VALUE,Long.MAX_VALUE);

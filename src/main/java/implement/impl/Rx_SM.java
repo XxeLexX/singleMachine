@@ -56,7 +56,6 @@ public class Rx_SM {
     }
 
     private void writeTemporalVertexDegree(Observable<Quartet<Integer, Long, Long, Integer>> temporalDegrees, String filePath_write){
-
         File degreeOutputFile = new File(filePath_write);
 
         try (FileWriter degreeWriter = new FileWriter(degreeOutputFile)){
@@ -66,10 +65,9 @@ public class Rx_SM {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            });
+            }).dispose();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
 }

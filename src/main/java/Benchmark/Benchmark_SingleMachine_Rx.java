@@ -2,6 +2,7 @@ package Benchmark;
 
 
 import implement.impl.Rx_SM;
+import implement.impl.Rx_SM_v2;
 import implement.myEnum.DegreeType;
 import implement.myEnum.DimensionType;
 import org.apache.commons.cli.CommandLine;
@@ -110,8 +111,12 @@ public class Benchmark_SingleMachine_Rx extends AbstractBenchmark{
         DegreeType degreeType = DegreeType.valueOf(DEGREE_TYPE);
         DimensionType timeDimension = DimensionType.valueOf(TIME_DIMENSION);
 
-        Rx_SM rx_sm = new Rx_SM();
-        Long runtime = rx_sm.run(INPUT_PATH,OUTPUT_PATH,degreeType,timeDimension);
+        //Rx_SM rx_sm = new Rx_SM();
+        //Long runtime = rx_sm.run(INPUT_PATH,OUTPUT_PATH,degreeType,timeDimension);
+
+        Rx_SM_v2 rx_sm_v2= new Rx_SM_v2();
+        Long runtime = rx_sm_v2.run(INPUT_PATH,OUTPUT_PATH,degreeType,timeDimension);
+
         writeCSV(runtime);
     }
 
