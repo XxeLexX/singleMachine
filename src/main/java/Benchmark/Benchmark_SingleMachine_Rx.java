@@ -114,6 +114,9 @@ public class Benchmark_SingleMachine_Rx extends AbstractBenchmark{
         //Rx_SM rx_sm = new Rx_SM();
         //Long runtime = rx_sm.run(INPUT_PATH,OUTPUT_PATH,degreeType,timeDimension);
 
+        if(Files.exists(Paths.get(OUTPUT_PATH))){
+            Files.delete(Paths.get(OUTPUT_PATH));
+        }
         Rx_SM_v2 rx_sm_v2= new Rx_SM_v2();
         Long runtime = rx_sm_v2.run(INPUT_PATH,OUTPUT_PATH,degreeType,timeDimension);
 
